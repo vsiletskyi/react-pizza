@@ -6,10 +6,22 @@ import Skeleton from '../components/PizzaBlock/Sleleton';
 
 const Home = () => {
     const [items, setItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
+
+    const [categoryId, setCategoryId] = useState(1);
+    const [sortType, setSortType] = useState({
+        name: 'popularity',
+        sortProperty: 'rating'
+    });
+
+    const category = categoryId > 0 ? `category=${categoryId}` : ''
+    const sortBy = sortType.sortProperty.replace('-', '')
+    const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
 
     useEffect(() => {
-        fetch('https://66f15d654153791915509881.mockapi.io/items')
+        setIsLoading(true)
+        fetch(`https://66f15d654153791915509881.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`)
+        
         .then((res) => {
             return res.json()
         })
@@ -18,13 +30,15 @@ const Home = () => {
             setIsLoading(false)
         })
         window.scrollTo(0,0)
-    }, [])
+    }, [categoryId, sortType])
+
+    console.log(categoryId, sortType)
     
     return (
         <div className="container">
             <div className="content__top">
-              <Categories />
-              <Sort />
+                <Categories value={ categoryId } onClickCategory={(index)=> setCategoryId(index)}/>
+                <Sort value={ sortType } onClickSort={(index)=> setSortType(index)}/>
             </div>
             <h2 className="content__title">All pizzas</h2>
             <div className="content__items">
