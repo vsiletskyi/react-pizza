@@ -16,7 +16,7 @@ function App() {
       <div className="wrapper">
         <Header searchValue={searchValue} setSearchValue={setSearchValue} />
         <div className="content">
-          <Home />
+          <Home searchValue={searchValue} />
         </div>
       </div>
     </div>
