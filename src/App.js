@@ -1,24 +1,26 @@
 import './scss/app.scss';
 import Header from './components/Header/Header';
 import Home from './pages/Home';
-import NotFound from './pages/NotFound';
-import { useState } from 'react';
+//import NotFound from './pages/NotFound';
+import { createContext, useState } from 'react';
 
+
+export const SearchContext = createContext();
 
 function App() {
 
   const [searchValue, setSearchValue] = useState('')
 
-  console.log(searchValue + ' input changed')
-
   return (
     <div className="App">
-      <div className="wrapper">
-        <Header searchValue={searchValue} setSearchValue={setSearchValue} />
-        <div className="content">
-          <Home searchValue={searchValue} />
+      <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+        <div className="wrapper">
+          <Header />
+          <div className="content">
+            <Home />
+          </div>
         </div>
-      </div>
+      </SearchContext.Provider>
     </div>
   );
 }
