@@ -6,13 +6,20 @@ import Skeleton from '../components/PizzaBlock/Sleleton';
 import Pagination from '../components/Pagination/Pagination';
 import { SearchContext } from '../App';
 
+import { useSelector, useDispatch } from 'react-redux'
+import { setCategoryId } from '../redux/slices/filterSlice'
+
 const Home = () => {
+
+    const categoryId = useSelector((state) => state.filters.categoryId)
+    const dispatch = useDispatch()
+
     const {searchValue} = useContext(SearchContext)
 
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const [categoryId, setCategoryId] = useState(0);
+    //const [categoryId, setCategoryId] = useState(0);
     const [sortType, setSortType] = useState({
         name: 'popularity',
         sortProperty: 'rating'
@@ -41,11 +48,15 @@ const Home = () => {
 
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />)
     const pizzas = items.map((obj) => <PizzaBlock {...obj} key={obj.id} />)
+
+    const onClickCategory = (id) => {
+        dispatch(setCategoryId(id))
+    }
     
     return (
         <div className="container">
             <div className="content__top">
-                <Categories value={ categoryId } onClickCategory={(index)=> setCategoryId(index)}/>
+                <Categories value={ categoryId } onClickCategory={onClickCategory}/>
                 <Sort value={ sortType } onClickSort={(index)=> setSortType(index)}/>
             </div>
             <h2 className="content__title">All pizzas</h2>
