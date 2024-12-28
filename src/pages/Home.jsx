@@ -12,6 +12,7 @@ import { setCategoryId } from '../redux/slices/filterSlice'
 const Home = () => {
 
     const categoryId = useSelector((state) => state.filters.categoryId)
+    const sortType = useSelector((state) => state.filters.sort.sortProperty)
     const dispatch = useDispatch()
 
     const {searchValue} = useContext(SearchContext)
@@ -19,18 +20,12 @@ const Home = () => {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    //const [categoryId, setCategoryId] = useState(0);
-    const [sortType, setSortType] = useState({
-        name: 'popularity',
-        sortProperty: 'rating'
-    });
-
     const [currentPage, setCurrentPage] = useState(1);
 
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     const search = searchValue ? `&search=${searchValue}` : ''
-    const sortBy = sortType.sortProperty.replace('-', '')
-    const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
+    const sortBy = sortType.replace('-', '')
+    const order = sortType.includes('-') ? 'asc' : 'desc'
 
     useEffect(() => {
         setIsLoading(true)
@@ -57,7 +52,7 @@ const Home = () => {
         <div className="container">
             <div className="content__top">
                 <Categories value={ categoryId } onClickCategory={onClickCategory}/>
-                <Sort value={ sortType } onClickSort={(index)=> setSortType(index)}/>
+                <Sort />
             </div>
             <h2 className="content__title">All pizzas</h2>
             <div className="content__items">
