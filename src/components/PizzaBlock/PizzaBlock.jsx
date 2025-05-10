@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function PizzaBlock({ title, price, imageUrl, sizes, types }) {
+function PizzaBlock({ title, price, imageUrl, sizes = [], types = [] }) {
     const typeNames = ['thin', 'traditional'];
     const [activeIndexSize, setActiveIndexSize] = useState(0);
     const [activeIndexType, setActiveIndexType] = useState(0);
