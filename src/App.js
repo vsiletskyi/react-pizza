@@ -1,8 +1,8 @@
-import './scss/app.scss';
 import Header from './components/Header/Header';
-import Home from './pages/Home';
-//import NotFound from './pages/NotFound';
+import { Outlet } from 'react-router-dom';
 import { createContext, useState } from 'react';
+
+import './scss/app.scss';
 
 export const SearchContext = createContext();
 
@@ -16,7 +16,7 @@ function App() {
         <div className="wrapper">
           <Header />
           <div className="content">
-            <Home />
+            <Outlet />
           </div>
         </div>
       </SearchContext.Provider>
